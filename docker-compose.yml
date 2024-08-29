@@ -1,0 +1,50 @@
+
+services: 
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: postgres
+    networks:
+      - node-network
+    ports:
+      - "6543:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+  back-end:
+    build: 
+      context: api
+    container_name: back-end
+    working_dir: /usr/src/app
+    networks:
+      - node-network
+    volumes: 
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    tty: true
+    ports: 
+      - "4001:4001"
+    command: nodemon
+    depends_on:
+       - db
+
+  front-end:
+    build: 
+      context: dashboard
+    container_name: front-end
+    networks:
+      - node-network
+    working_dir: /usr/src/app
+    volumes: 
+      - ./dashboard:/usr/src/app
+      - /usr/src/app/node_modules
+    tty: true
+    ports: 
+      - "5173:5173"
+    command: npm run dev
+  
+networks: 
+  node-network:
+    driver: bridge
