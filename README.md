@@ -3,7 +3,7 @@ Run the following commands:
 1. git clone git@github.com:monddelmundo/Full-Stack-Engineer-Challenge.git
 2. cd dashboard
 3. npm install
-4. cd dashboard ../api
+4. cd ../api
 5. npm install
 6. cd ..
 7. docker-compose --build
