@@ -13,7 +13,7 @@ export const sequelize = new Sequelize(db, username, process.env.POSTGRES_PASSWO
 sequelize.authenticate()
 
 sequelize.sync().then(() => {
-  console.log('Table(s) created successfully!');
+  console.log('Synced successfully!');
 }).catch((error) => {
   console.error('Unable to create table(s) : ', error);
 });
