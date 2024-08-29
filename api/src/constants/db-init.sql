@@ -1,4 +1,4 @@
-create table "Results"(
+create table if not exists "Results"(
     "Id" serial primary key,
     "Status" text not null,
     "RepositoryName" text not null,
