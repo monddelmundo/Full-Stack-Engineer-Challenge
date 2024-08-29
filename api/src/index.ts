@@ -1,8 +1,8 @@
+import 'dotenv/config'
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as express from "express";
 import { resultRouter } from './routers/result.router';
-
 const app = express();
 const port = 4001;
 
