@@ -102,10 +102,9 @@ const SubmitScanResult = () => {
   return (
     <Box mx="auto" px={3} pb={3} mt="3em" w={["100%", "100%", "80%", "80%"]}>
       <form onSubmit={handleSubmitScan(onSubmitScan)}>
-        <FormContainer>
+        <FormContainer width={{base: '100%', lg: '20%'}}>
           <Label>Status</Label>
           <Select
-            width={'20%'}
             placeholder="Select status"
             {...registerScan("Status", { required: true })}
           >
@@ -115,10 +114,9 @@ const SubmitScanResult = () => {
             <option value="Failure">Failure</option>
           </Select>
         </FormContainer>
-        <FormContainer>
+        <FormContainer width={{base: '100%', lg: '20%'}}>
           <Label>Repository Name</Label>
           <Input
-            sx={{width: '20%'}}
             placeholder="Repository Name"
             {...registerScan("RepositoryName", { required: true })}
           />

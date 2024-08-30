@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react'
 
-const FormContainer = ({children}: any) => {
-    return <Box mt={3}>
+const FormContainer = ({children, ...otherProps}: any) => {
+    return <Box mt={3} {...otherProps}>
         {children}
     </Box>
 }
