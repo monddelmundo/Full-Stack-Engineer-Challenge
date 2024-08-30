@@ -21,7 +21,7 @@ import {
   Thead,
   Tr,
   useDisclosure,
-  useToast 
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -62,33 +62,50 @@ const SubmitScanResult = () => {
     formState: { errors: errorsFinding },
   } = useForm<FindingInputs>();
 
-  const toast = useToast()
+  const toast = useToast();
 
   const onSubmitScan: SubmitHandler<ScanInputs> = async (data) => {
     if (findings?.length > 0) {
       try {
         await axios.post(`${API_URL}/result/create`, {
           ...data,
-          findings,
+          findings: findings.map((finding) => {
+            return {
+              type: finding.type,
+              ruleId: finding.ruleId,
+              location: {
+                path: finding.path,
+                positions: {
+                  begin: {
+                    line: finding.line,
+                  },
+                },
+              },
+              metadata: {
+                description: finding.description,
+                severity: finding.severity,
+              },
+            };
+          }),
         });
         toast({
-            title: 'Scan submitted.',
-            description: "Scan has been submitted successfully.",
-            status: 'success',
-            duration: 9000,
-            isClosable: true,
-          })
+          title: "Scan submitted.",
+          description: "Scan has been submitted successfully.",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
         resetScan();
-        setFindings([])
+        setFindings([]);
       } catch (error) {
         console.error(error);
         toast({
-            title: 'Failed.',
-            description: "Failed to submit scan.",
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-          })
+          title: "Failed.",
+          description: "Failed to submit scan.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
       }
     }
   };
@@ -102,7 +119,7 @@ const SubmitScanResult = () => {
   return (
     <Box mx="auto" px={3} pb={3} mt="3em" w={["100%", "100%", "80%", "80%"]}>
       <form onSubmit={handleSubmitScan(onSubmitScan)}>
-        <FormContainer width={{base: '100%', lg: '20%'}}>
+        <FormContainer width={{ base: "100%", lg: "20%" }}>
           <Label>Status</Label>
           <Select
             placeholder="Select status"
@@ -114,7 +131,7 @@ const SubmitScanResult = () => {
             <option value="Failure">Failure</option>
           </Select>
         </FormContainer>
-        <FormContainer width={{base: '100%', lg: '20%'}}>
+        <FormContainer width={{ base: "100%", lg: "20%" }}>
           <Label>Repository Name</Label>
           <Input
             placeholder="Repository Name"

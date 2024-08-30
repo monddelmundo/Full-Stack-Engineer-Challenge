@@ -14,9 +14,18 @@ import { API_URL } from "./SubmitScanResult";
 
 interface IFinding {
   ruleId: string;
-  description: string;
-  severity: string;
-  path: string;
+  location: {
+    path: string;
+    positions: {
+      begin: {
+        line: number
+      }
+    }
+  }
+  metadata: {
+    description: string;
+    severity: string;
+  }
   line: number;
 }
 
@@ -53,9 +62,9 @@ const FindingList = () => {
                 return (
                   <Tr key={`finding-${index}`}>
                     <Td>{finding.ruleId}</Td>
-                    <Td>{finding.description}</Td>
-                    <Td>{finding.severity}</Td>
-                    <Td>{`${finding.path} : ${finding.line}`}</Td>
+                    <Td>{finding.metadata?.description}</Td>
+                    <Td>{finding.metadata?.severity}</Td>
+                    <Td>{`${finding.location?.path} : ${finding.location?.positions?.begin?.line}`}</Td>
                   </Tr>
                 );
               })}
